@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: inline-block;
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 200px;
+            padding: 5px;
+            font-size: 20px;
+        }
+
+        select#conversionType {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            background-color: lightblue;
+            cursor: pointer;
+        }
+
+        .result {
+            font-weight: bold;
+            margin-top: 20px;
+            background-color: lightblue;
+            padding: 10px;
+            font-size: 24px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Temperature Converter</h1>
+    <form onsubmit="convertTemperature(event)">
+        <label for="temperature">Temperature:</label>
+        <input type="number" id="temperature" required>
+
+        <label for="conversionType">Conversion Type:</label>
+        <select id="conversionType">
+            <option value="fahrenheitToCelsius">Fahrenheit to Celsius</option>
+            <option value="celsiusToFahrenheit">Celsius to Fahrenheit</option>
+        </select>
+
+        <input type="submit" value="Convert">
+
+        <br> <!-- Add line break to display the result in the next line -->
+
+        <p class="result" id="result"></p>
+    </form>
+
+    <script>
+        function convertTemperature(event) {
+            event.preventDefault();
+
+            const temperatureInput = document.getElementById("temperature");
+            const conversionTypeSelect = document.getElementById("conversionType");
+            const resultElement = document.getElementById("result");
+
+            const temperature = parseFloat(temperatureInput.value);
+            const conversionType = conversionTypeSelect.value;
+
+            if (!isNaN(temperature)) {
+                let convertedTemperature;
+                let resultText;
+
+                if (conversionType === "fahrenheitToCelsius") {
+                    convertedTemperature = (temperature - 32) * (5 / 9);
+                    resultText = `${temperature}°F is equal to ${convertedTemperature.toFixed(2)}°C`;
+                } else if (conversionType === "celsiusToFahrenheit") {
+                    convertedTemperature = (temperature * 9 / 5) + 32;
+                    resultText = `${temperature}°C is equal to ${convertedTemperature.toFixed(2)}°F`;
+                }
+
+                resultElement.textContent = resultText;
+            } else {
+                resultElement.textContent = "Please enter a valid temperature value.";
+            }
+        }
+    </script>
+</body>
+</html>
